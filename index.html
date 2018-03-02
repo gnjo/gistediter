@@ -95,7 +95,7 @@ ed.add('I',(el,flg,o)=>{
     return;//init
   }
   if(flg=== 0){
-    if(loaded===false && sys.g) obj.load();
+    if(loaded===false && sys.g){loaded=true; obj.load()} //bug fix. not write loaded=true
     return;//open
   }
   if(flg=== 1) return;//double
