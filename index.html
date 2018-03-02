@@ -81,7 +81,7 @@ thenload([
         if(d){
           obj.data=sys.g.jps(d.content);
           Object.keys(obj.data).forEach((key)=>{
-             let x =obj.data[key];console.log(x);
+             let x =obj.data[key];/*console.log(x);*/
              let el=obj.fac(x.url,x.time,x.flg)
              obj.target.appendChild(el)
           })
