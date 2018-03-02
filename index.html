@@ -1,0 +1,111 @@
+<head>
+<script src="//gnjo.github.io/thenload.js"></script>
+<style>
+body{
+  margin:4rem auto;
+  display:flex;justify-content:center;
+  overflow-y:scroll;
+}
+[data-editer="imgur"]>.imgframe
+,[data-editer="imgur"]>img{
+  width:125px;height:100px;
+}
+</style>
+</head>
+<body>
+<script>
+
+var sys=this.sys||{};
+thenload(['//gnjo.github.io/editer.js']).then((d)=>{
+let ed=editer();
+document.body.appendChild(ed.frame);///
+function c(ev){
+  console.log(ev)
+}
+//button.onclick =function(ev){ if(!sys.g && sys.auth) sys.auth();}
+/*auth*/
+;thenload([
+  'https://cdnjs.cloudflare.com/ajax/libs/superagent/3.8.2/superagent.js'
+  ,'//gnjo.github.io/md5.min.js'
+  ,'//gnjo.github.io/gistplace.js'
+])
+  .then((d)=>{
+  sys.auth =function(){
+  let desc='totaltest',u='gnjo'
+  ,a=localStorage.getItem(desc)
+  ;
+  if(!a){ a=window.prompt('login');localStorage.setItem(desc,atob(a)) }
+  else{ a=btoa(a)}
+  gistplace(u,a,desc).then((d)=>{
+      sys.g=d;
+      sys.g.caller=c;
+    }).catch(d=>{localStorage.removeItem(desc);})
+  }
+
+ed.add('A',(el,flg,o)=>{
+  if(flg===-1) return;//init
+  if(flg=== 0){
+    if(!sys.g && sys.auth) sys.auth();
+    return;
+  }
+  if(flg=== 1) return;//double
+});  
+  
+});  
+
+/*imgur*/
+thenload([
+  "https://cdnjs.cloudflare.com/ajax/libs/superagent/3.8.2/superagent.js"
+  ,"//gnjo.github.io/md5.min.js"
+  ,"//gnjo.github.io/filter.js"
+  ,"//gnjo.github.io/imgc.js"
+  ,"//gnjo.github.io/imgurgist.js"
+  ,"//gnjo.github.io/gistplace.js"
+])
+  .then((d)=>{
+    var obj=imgur({cid:'c552bf3081f0790',loading:'https://i.imgur.com/HUaAzml.gif'});
+    let me=obj.draw();
+    obj.calc =function(base64){
+      return imgc(base64)
+      .fit({w:300,h:200,fa:2})
+      .filter('grayscale')
+      .filter('_median')
+      .then(d=>d)
+    }
+    obj.save=(src)=>{
+      if(src) obj.data[md5(src)] ={url:src,time:Date.now(),flg:1}   
+      if(sys.g){sys.g.write(obj.filename,sys.g.jsy(obj.data))}
+    }
+    obj.load=()=>{
+        let d= sys.g.read(obj.filename);
+        if(d){
+          obj.data=sys.g.jps(d.content);
+          Object.keys(obj.data).forEach((key)=>{
+             let x =obj.data[key];
+             let el=obj.fac(x.url,x.time,x.flg)
+             obj.target.appendChild(el)
+          })
+        }
+    }
+    let loaded =false;
+ed.add('I',(el,flg,o)=>{
+  if(flg===-1){
+    el.innerHTML='';
+    el.appendChild(me);
+    return;//init
+  }
+  if(flg=== 0){
+    if(loaded===false && sys.g) obj.load();
+    return;//open
+  }
+  if(flg=== 1) return;//double
+});  
+  
+});
+  
+  
+  
+});
+
+</script>
+</body>
