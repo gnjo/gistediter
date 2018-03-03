@@ -18,6 +18,14 @@ body{
 var sys=this.sys||{};
 thenload(['//gnjo.github.io/editer.js?v0.5']).then((d)=>{
 let ed=editer();
+ed._save=function(filename,data){
+  console.log(filename,data)
+  if(sys.g){
+    sys.g.write(filename,data);
+    ed.saveflg=false;
+  }
+}
+  
 document.body.appendChild(ed.frame);///
 function c(ev){
   console.log(ev)
