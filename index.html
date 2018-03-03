@@ -23,6 +23,7 @@ ed._save=function(filename,data){
   if(sys.g){
     sys.g.write(filename,data);
     ed.saveflg=false;
+    ed._mes.classList.remove('saveflg'); 
   }
 }
   
