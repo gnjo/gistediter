@@ -39,6 +39,23 @@ function c(ev){
   ,'//gnjo.github.io/gistplace.js'
 ])
   .then((d)=>{
+  let fn={}
+  fn.jpTime=(timestamp=Date.now())=>{
+    return new Date(timestamp+1000*60*60*9)
+      .toISOString()
+      .replace(/-/g,'/')
+      .replace('T',' ')
+      .slice(0,'YYYY/MM/DD hh:mm'.length)
+    ;
+  } 
+  let timeToOrder=(time)=>{return 2147483647 - parseInt( time/1000 )}
+  ,filefac=(filename,time,flg,data)=>{
+    let el =document.createElement('li'),da=data.content,fi=filename
+    el.style.order =timeToOrder(time)
+    el.textContent =`${fi} - ${fn.jpTime(time)} - ${da.slice(0,100)}`;
+    el.onclick =function(ev){ed.load(fi,da)}
+    return el;
+  }  
   sys.auth =function(){
   let desc='totaltest',u='gnjo'
   ,a=localStorage.getItem(desc)
@@ -48,13 +65,22 @@ function c(ev){
   gistplace(u,a,desc).then((d)=>{
       sys.g=d;
       sys.g.caller=c;
+      console.log(sys.g)
+    
     }).catch(d=>{localStorage.removeItem(desc);})
   }
-
-ed.add('A',(el,flg,o)=>{
+  
+  ed.add('A',(el,flg,o)=>{
   if(flg===-1) return;//init
   if(flg=== 0){
     if(!sys.g && sys.auth) sys.auth();
+    if(sys.g){
+      let non =/___.+___/,li =sys.g.list
+      ,ary=li.filter(d=>!non.test(d)).map(d=>filefac(d.filename,d.time,d.watch,sys.g.read(d.filename)))
+      ;
+      el.innerHTML='';
+      ary.forEach(d=>el.appendChild(d))
+    }
     return;
   }
   if(flg=== 1) return;//double
@@ -62,6 +88,7 @@ ed.add('A',(el,flg,o)=>{
   
 });  
 
+  
 /*imgur*/
 thenload([
   "https://cdnjs.cloudflare.com/ajax/libs/superagent/3.8.2/superagent.js"
