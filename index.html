@@ -63,6 +63,15 @@ thenload([
   ,"//gnjo.github.io/gistplace.js"
 ])
   .then((d)=>{
+    let fn={};
+    fn.hashCode =(s)=>{
+      var h=0;for(var i=0;i < s.length; i++) h = h * 31 + s.charCodeAt(i)|0;return h; 
+    }
+    fn.mic12 =(s)=>{
+      var d= fn.hashCode('GGGGGG'+s),a =d.toString(16).slice(-6);
+      return a+a;
+    }
+    let md5=fn.mic12///  
     var obj=imgur({cid:'c552bf3081f0790',loading:'https://i.imgur.com/HUaAzml.gif'});
     let me=obj.draw();
     obj.calc =function(base64){
