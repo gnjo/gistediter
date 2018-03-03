@@ -75,8 +75,9 @@ function c(ev){
   if(flg=== 0){
     if(!sys.g && sys.auth) sys.auth();
     if(sys.g){
-      let non =/___.+___/,li =sys.g.list
-      ,ary=li.filter(d=>!non.test(d)).map(d=>filefac(d.filename,d.time,d.watch,sys.g.read(d.filename)))
+      let non =/___.+___/,li =sys.g.list //li is Object
+      ,ary=Object.keys(li).filter(d=>!non.test(d))
+       .map(key=>{let d=li[key];return filefac(d.filename,d.time,d.watch,sys.g.read(d.filename))})       
       ;
       el.innerHTML='';
       ary.forEach(d=>el.appendChild(d))
