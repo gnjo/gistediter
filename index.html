@@ -87,6 +87,10 @@ function c(ev){
       ,ary=Object.keys(li).filter(d=>!non.test(d))
        .map(key=>{let d=li[key];return filefac(d.filename,d.time,d.watch,sys.g.read(d.filename))})       
       ;
+      //and new 
+      let newt =Date.now() + 24*60*60*1000,newf= o.fn.rkana(8)
+      ary.push(filefac(newf,newt,1,`＃${newf}\n`) )
+      
       el.innerHTML='';
       ary.forEach(d=>el.appendChild(d))
     }
