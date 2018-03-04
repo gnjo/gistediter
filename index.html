@@ -49,13 +49,21 @@ function c(ev){
     ;
   } 
   let timeToOrder=(time)=>{return 2147483647 - parseInt( time/1000 )}
+  ,shortlex=(str)=>{
+    let rt=/＃.+/,ru=/＠.+/,rd=/[：；].+/,len=/\r?\n/g,data=str||''
+    ,f =(ma,flg)=>{return (flg)?(data.match(ma)||[]).length : (data.match(ma)||'').toString()}
+    ;
+    return {t:f(rt),u:f(ru).slice(1),d:f(rd),l:f(len,'is')}
+  }
   ,filefac=(filename,time,flg,data)=>{
-    let el =document.createElement('li'),da=data.content,fi=filename
+    let el =document.createElement('li'),da=data.content,fi=filename,info=shortlex(da)
     el.style.order =timeToOrder(time)
-    el.textContent =`${fi} - ${fn.jpTime(time)} - ${da.slice(0,100)}`;
+    el.textContent =`${fi} - ${fn.jpTime(time)} - ${info.t} - ${info.d}`;
+    el.backgroundImage =`url(${info.u})`
     el.onclick =function(ev){ed.load(fi,da)}
     return el;
   }  
+  
   sys.auth =function(){
   let desc='totaltest',u='gnjo'
   ,a=localStorage.getItem(desc)
