@@ -64,7 +64,7 @@ function c(ev){
     let el =document.createElement('li'),da=data.content||data||'',fi=filename,info=shortlex(da)
     el.style.order =timeToOrder(time)
     el.textContent =`${fi} - ${fn.jpTime(time)} - ${info.t} - ${info.d}`;
-    el.backgroundImage =`url(${info.u})`
+    el.style.backgroundImage =`url(${info.u})`
     el.onclick =function(ev){ed.load(fi,da)}
     return el;
   }  
