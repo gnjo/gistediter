@@ -61,7 +61,7 @@ function c(ev){
     return {t:f(rt),u:f(ru).slice(1),d:f(rd),l:f(len,'is')}
   }
   ,filefac=(filename,time,flg,data)=>{
-    let el =document.createElement('li'),da=data.content,fi=filename,info=shortlex(da)
+    let el =document.createElement('li'),da=data.content||data||'',fi=filename,info=shortlex(da)
     el.style.order =timeToOrder(time)
     el.textContent =`${fi} - ${fn.jpTime(time)} - ${info.t} - ${info.d}`;
     el.backgroundImage =`url(${info.u})`
