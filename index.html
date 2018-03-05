@@ -65,7 +65,10 @@ function c(ev){
     el.style.order =timeToOrder(time)
     el.textContent =`${fi} - ${fn.jpTime(time)} - ${info.t} - ${info.d}`;
     el.style.backgroundImage =`url(${info.u})`
-    el.onclick =function(ev){ed.load(fi,da)}/***********id truncked raw_url****************/
+    el.onclick =function(ev){
+      if(data.raw_url) fetch(data.raw_url).then(res=>res.text()).then(fulldata=>ed.load(fi,fulldata))
+      else ed.load(fi,da)
+    }/***********if truncked raw_url****************/
     return el;
   }  
   
