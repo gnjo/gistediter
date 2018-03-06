@@ -14,7 +14,12 @@ body{
     flex-direction: row;
     flex-wrap: wrap;
     overflow-y: auto;
-}  
+}
+[data-editer="A"] .card{
+ box-sizing: border-box;
+ width: 50%;
+ height: 150px;  
+}
 </style>
 </head>
 <body>
@@ -73,7 +78,7 @@ function c(ev){
     c.time.textContent =fn.jpTime(time);
     c.title.textContent = info.t;
     c.desc.textContent = info.d
-
+    el.classList.add('if-story');
     el.style.order =timeToOrder(time)    
     //el.textContent =`${fi} - ${fn.jpTime(time)} - ${info.t} - ${info.d}`;
     el.style.backgroundImage =`url(${info.u})`
