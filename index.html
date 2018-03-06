@@ -41,6 +41,8 @@ function c(ev){
 ;thenload([
   'https://cdnjs.cloudflare.com/ajax/libs/superagent/3.8.2/superagent.js'
   //,'//gnjo.github.io/md5.min.js'
+  ,'//gnjo.github.io/card.js'
+  ,'//gnjo.github.io/card.css'    
   ,'//gnjo.github.io/gistplace.js?v1.0'
 ])
   .then((d)=>{
@@ -61,9 +63,19 @@ function c(ev){
     return {t:f(rt),u:f(ru).slice(1),d:f(rd),l:f(len,'is')}
   }
   ,filefac=(filename,time,flg,data)=>{
-    let el =document.createElement('li'),da=data.content||data||'',fi=filename,info=shortlex(da)
-    el.style.order =timeToOrder(time)
-    el.textContent =`${fi} - ${fn.jpTime(time)} - ${info.t} - ${info.d}`;
+    let c =card();
+    console.log(c)
+    let el = c.el //document.createElement('li')
+    ,da=data.content||data||''
+    ,fi=filename,info=shortlex(da)
+    ;
+    c.tag.textContent =fi;
+    c.time.textContent =fn.jpTime(time);
+    c.title.textContent = info.t;
+    c.desc.textContent = info.d
+
+    el.style.order =timeToOrder(time)    
+    //el.textContent =`${fi} - ${fn.jpTime(time)} - ${info.t} - ${info.d}`;
     el.style.backgroundImage =`url(${info.u})`
     /*
     el.onclick =function(ev){
@@ -77,6 +89,24 @@ function c(ev){
     }    
     return el;
   }  
+
+  /*,filefac=(filename,time,flg,data)=>{
+    let el =document.createElement('li'),da=data.content||data||'',fi=filename,info=shortlex(da)
+    el.style.order =timeToOrder(time)
+    el.textContent =`${fi} - ${fn.jpTime(time)} - ${info.t} - ${info.d}`;
+    el.style.backgroundImage =`url(${info.u})`
+    
+    //el.onclick =function(ev){
+    //  if(data.raw_url) fetch(data.raw_url).then(res=>res.text()).then(fulldata=>ed.load(fi,fulldata))
+    //  else ed.load(fi,da)
+    //}
+    
+    el.onclick =function(ev){
+      if(data.raw_url) sys.g.fullread(data.raw_url).then(fulldata=>ed.load(fi,fulldata))
+      else ed.load(fi,da)
+    }    
+    return el;
+  }*/  
   
   sys.auth =function(){
   let desc='totaltest',u='gnjo'
