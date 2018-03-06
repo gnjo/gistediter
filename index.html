@@ -29,7 +29,7 @@ var sys=this.sys||{};
 thenload(['//gnjo.github.io/editer.js?v0.5']).then((d)=>{
 let ed=editer();
 ed._save=function(filename,data){
-  console.log(filename,data)
+  //console.log(filename,data)
   if(sys.g){
     sys.g.write(filename,data);
     ed.saveflg=false;
@@ -38,9 +38,9 @@ ed._save=function(filename,data){
 }
   
 document.body.appendChild(ed.frame);///
-function c(ev){
-  console.log(ev)
-}
+//function c(ev){
+//  console.log(ev)
+//}
 //button.onclick =function(ev){ if(!sys.g && sys.auth) sys.auth();}
 /*auth*/
 ;thenload([
@@ -69,7 +69,7 @@ function c(ev){
   }
   ,filefac=(filename,time,flg,data)=>{
     let c =card();
-    console.log(c)
+    //console.log(c)
     let el = c.el //document.createElement('li')
     ,da=data.content||data||''
     ,fi=filename,info=shortlex(da)
